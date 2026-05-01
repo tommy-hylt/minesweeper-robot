@@ -7,10 +7,7 @@ document.body.style.background = `url('${import.meta.env.BASE_URL}wallpaper.png'
 
 function scaleRoot() {
   const scale = window.innerHeight / 1080
-  const root = document.getElementById('root')!
-  root.style.transform = `scale(${scale})`
-  document.body.style.width = `${1920 * scale}px`
-  document.body.style.height = `${1080 * scale}px`
+  document.getElementById('root')!.style.transform = `scale(${scale})`
 }
 scaleRoot()
 window.addEventListener('resize', scaleRoot)
