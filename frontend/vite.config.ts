@@ -10,8 +10,9 @@ export default defineConfig({
       name: "js-jsx",
       async transform(code, id) {
         if (!id.endsWith(".js")) return null;
-        const result = await transform(code, { loader: "jsx" });
-        return { code: result.code, map: result.map };
+        if (!path.isAbsolute(id) || id.includes("node_modules")) return null;
+        const result = await transform(code, { loader: "jsx", sourcemap: true });
+        return { code: result.code, map: result.map || null };
       },
     },
     react(),
