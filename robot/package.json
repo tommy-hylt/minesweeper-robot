@@ -1,0 +1,17 @@
+{
+  "name": "@minesweeper-robot/robot",
+  "version": "1.0.0",
+  "description": "Minesweeper solver robot — TypeScript port of MinesweeperRobot (C#)",
+  "type": "module",
+  "main": "src/robot.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "typescript": "^5.0.0"
+  }
+}

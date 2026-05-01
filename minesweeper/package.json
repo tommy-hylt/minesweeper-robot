@@ -1,0 +1,14 @@
+{
+  "name": "@minesweeper-robot/minesweeper",
+  "version": "1.0.0",
+  "description": "ShizukuIchi React Minesweeper — source copy with TypeScript declarations",
+  "main": "src/Minesweeper/index.js",
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0",
+    "styled-components": ">=5.0.0"
+  },
+  "devDependencies": {
+    "lodash.samplesize": "^4.2.0"
+  }
+}

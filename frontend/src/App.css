@@ -1,0 +1,190 @@
+body {
+  margin: 0;
+  background: url('/wallpaper.png') center / cover no-repeat fixed;
+  min-height: 100vh;
+  font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
+  font-size: 11px;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.desktop {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ── XP Window chrome ─────────────────────────────────────────── */
+
+.xp-window {
+  display: inline-flex;
+  flex-direction: column;
+  border: 3px solid #0050c0;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  box-shadow:
+    1px 1px 0 #b0d0ff inset,
+    -1px -1px 0 #003090 inset,
+    2px 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.xp-window__titlebar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 6px 4px 8px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background: linear-gradient(
+    to right,
+    #0a246a 0%,
+    #1254b8 25%,
+    #2878e8 60%,
+    #7ab8f8 90%,
+    #a8d0ff 100%
+  );
+  user-select: none;
+}
+
+.xp-window__title {
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 12px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.3px;
+}
+
+.xp-window__controls {
+  display: flex;
+  flex-direction: row;
+  gap: 2px;
+  margin-left: 8px;
+}
+
+.xp-window__btn {
+  width: 21px;
+  height: 21px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  font-size: 10px;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-weight: bold;
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  line-height: 1;
+  color: #000;
+}
+
+.xp-window__btn--min {
+  background: linear-gradient(180deg, #f0f0d8 0%, #d0c888 50%, #a89840 100%);
+}
+
+.xp-window__btn--max {
+  background: linear-gradient(180deg, #f0f0d8 0%, #d0c888 50%, #a89840 100%);
+}
+
+.xp-window__btn--close {
+  background: linear-gradient(180deg, #f87878 0%, #e83030 50%, #b80000 100%);
+  color: #fff;
+}
+
+.xp-window__btn:hover {
+  filter: brightness(1.15);
+}
+
+.xp-window__body {
+  background-color: rgb(236, 233, 216);
+  border-top: 2px solid rgb(245, 245, 245);
+  padding: 8px;
+}
+
+/* ── Console variant ──────────────────────────────────────────── */
+
+.xp-window--console {
+  border-width: 1px;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.xp-window--console .xp-window__body {
+  padding: 0;
+}
+
+/* ── Robot panel internals ────────────────────────────────────── */
+
+.robot-panel {
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.robot-panel__controls {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.robot-panel__btn {
+  background-color: rgb(236, 233, 216);
+  border-top: 2px solid rgb(245, 245, 245);
+  border-left: 2px solid rgb(245, 245, 245);
+  border-right: 2px solid rgb(64, 64, 64);
+  border-bottom: 2px solid rgb(64, 64, 64);
+  font-family: inherit;
+  font-size: 11px;
+  padding: 3px 10px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.robot-panel__btn:active:not(:disabled) {
+  border-top: 2px solid rgb(64, 64, 64);
+  border-left: 2px solid rgb(64, 64, 64);
+  border-right: 2px solid rgb(245, 245, 245);
+  border-bottom: 2px solid rgb(245, 245, 245);
+}
+
+.robot-panel__btn:disabled {
+  color: rgb(128, 128, 128);
+  cursor: default;
+}
+
+.robot-panel__speed {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.robot-panel__speed-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 11px;
+}
+
+.robot-panel__slider {
+  width: 100%;
+  cursor: pointer;
+}
+
+.robot-panel__speed-value {
+  text-align: right;
+  color: rgb(64, 64, 64);
+}
+
+.robot-panel__status {
+  font-size: 11px;
+  text-align: center;
+  padding: 2px 4px;
+  border-top: 1px solid rgb(128, 128, 128);
+  border-left: 1px solid rgb(128, 128, 128);
+  border-right: 1px solid rgb(245, 245, 245);
+  border-bottom: 1px solid rgb(245, 245, 245);
+  background-color: rgb(255, 255, 255);
+}
