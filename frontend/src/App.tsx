@@ -4,6 +4,7 @@ import type { Difficulty, MinesweeperState } from "@minesweeper/Minesweeper/inde
 import MinesweeperView from "@minesweeper/Minesweeper/MinesweeperView";
 import ConsolePanel from "./ConsolePanel";
 import XpWindow from "./XpWindow";
+import XpTaskbar from "./XpTaskbar";
 import "@minesweeper/index.css";
 import "./App.css";
 
@@ -170,6 +171,7 @@ export default function App() {
           onReady={() => setTopWindow("game")}
         />
       </XpWindow>
+      <XpTaskbar />
     </div>
   );
 }
