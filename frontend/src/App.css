@@ -1,7 +1,5 @@
 body {
   margin: 0;
-  background: url('/wallpaper.png') center / cover no-repeat fixed;
-  min-height: 100vh;
   font-family: "Tahoma", "MS Sans Serif", Arial, sans-serif;
   font-size: 11px;
 }
