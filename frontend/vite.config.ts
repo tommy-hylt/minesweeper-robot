@@ -4,7 +4,7 @@ import react from "@vitejs/plugin-react";
 import { transform } from "esbuild";
 
 export default defineConfig({
-  base: "/minesweeper-robot/",
+  base: "./",
   plugins: [
     {
       name: "js-jsx",
