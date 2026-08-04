@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { type ReactNode, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 interface Props {
   title: string;
@@ -9,6 +9,7 @@ interface Props {
   controls?: "all" | "close-only";
   zIndex?: number;
   onFocus?: () => void;
+  onMove?: () => void;
 }
 
 export default function XpWindow({
@@ -20,21 +21,26 @@ export default function XpWindow({
   controls = "all",
   zIndex,
   onFocus,
+  onMove,
 }: Props) {
   const [pos, setPos] = useState({ x: initialX, y: initialY });
   const offset = useRef({ ox: 0, oy: 0 });
   const dragging = useRef(false);
 
+  useLayoutEffect(() => {
+    onMove?.();
+  }, [pos, onMove]);
+
   useEffect(() => {
-    const onMove = (e: MouseEvent) => {
+    const onMouseMove = (e: MouseEvent) => {
       if (!dragging.current) return;
       setPos({ x: e.clientX - offset.current.ox, y: e.clientY - offset.current.oy });
     };
     const onUp = () => { dragging.current = false; };
-    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseup", onUp);
     return () => {
-      window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseup", onUp);
     };
   }, []);

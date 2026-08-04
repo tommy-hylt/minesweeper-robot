@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useReducer, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useReducer, useRef, useState } from "react";
 import { reducer, getInitState } from "@minesweeper/Minesweeper/index";
 import type { Difficulty, MinesweeperState } from "@minesweeper/Minesweeper/index";
 import MinesweeperView from "@minesweeper/Minesweeper/MinesweeperView";
@@ -122,14 +122,41 @@ export default function App() {
     dispatch({ type: "CLEAR_MAP", payload: d });
   }, []);
 
+  const desktopRef = useRef<HTMLDivElement>(null);
+  const [desktopSize, setDesktopSize] = useState({ width: 0, height: 0 });
+
+  const measureDesktop = useCallback(() => {
+    const el = desktopRef.current;
+    if (!el) return;
+    let maxRight = window.innerWidth;
+    let maxBottom = window.innerHeight;
+    for (const child of el.children) {
+      if (!(child instanceof HTMLElement) || !child.classList.contains("xp-window")) continue;
+      maxRight = Math.max(maxRight, child.offsetLeft + child.offsetWidth);
+      maxBottom = Math.max(maxBottom, child.offsetTop + child.offsetHeight);
+    }
+    setDesktopSize({ width: maxRight, height: maxBottom });
+  }, []);
+
+  useLayoutEffect(() => {
+    measureDesktop();
+    window.addEventListener("resize", measureDesktop);
+    return () => window.removeEventListener("resize", measureDesktop);
+  }, [measureDesktop]);
+
   return (
-    <div className="desktop">
+    <div
+      className="desktop"
+      ref={desktopRef}
+      style={{ width: desktopSize.width || undefined, height: desktopSize.height || undefined }}
+    >
       <XpWindow
         title="Minesweeper"
         initialX={160}
         initialY={60}
         zIndex={gameZ}
         onFocus={() => setTopWindow("game")}
+        onMove={measureDesktop}
         controls="close-only"
       >
         <MinesweeperView
@@ -159,6 +186,7 @@ export default function App() {
         controls="close-only"
         zIndex={consoleZ}
         onFocus={() => setTopWindow("console")}
+        onMove={measureDesktop}
       >
         <ConsolePanel
           ceils={ceils}
