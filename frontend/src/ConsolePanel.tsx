@@ -103,7 +103,6 @@ export default function ConsolePanel({
       addLog("Game over. Restarting in 1s...");
       const t = setTimeout(() => {
         onReset();
-        startCountdown();
       }, 1000);
       return () => clearTimeout(t);
     }
@@ -112,6 +111,14 @@ export default function ConsolePanel({
       pause();
       addLog("You won! \uD83C\uDF89  Press Enter for another round.");
       // Enter handling is done by the persistent listener above — no addEventListener here
+    }
+
+    // Any reset — the scheduled one above, a manual smile-face click, or a
+    // difficulty change — lands here as a transition into "new". Restarting
+    // the countdown here (rather than inline in the setTimeout) means a
+    // manual reset that preempts the scheduled one still restarts the robot.
+    if (status === "new" && prev !== "new") {
+      startCountdown();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
