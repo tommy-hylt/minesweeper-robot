@@ -3,8 +3,10 @@ import { reducer, getInitState } from "@minesweeper/Minesweeper/index";
 import type { Difficulty, MinesweeperState } from "@minesweeper/Minesweeper/index";
 import MinesweeperView from "@minesweeper/Minesweeper/MinesweeperView";
 import ConsolePanel from "./ConsolePanel";
+import ReadMe from "./ReadMe";
 import XpWindow from "./XpWindow";
 import XpTaskbar from "./XpTaskbar";
+import XpShutdownScreen from "./XpShutdownScreen";
 import "@minesweeper/index.css";
 import "./App.css";
 
@@ -114,9 +116,12 @@ export default function App() {
     [status]
   );
 
-  const [topWindow, setTopWindow] = useState<"game" | "console">("console");
+  const [topWindow, setTopWindow] = useState<"game" | "console" | "readme">("console");
+  const [readmeOpen, setReadmeOpen] = useState(false);
+  const [shutdownKind, setShutdownKind] = useState<"logoff" | "shutdown" | null>(null);
   const gameZ = topWindow === "game" ? 2 : 1;
   const consoleZ = topWindow === "console" ? 2 : 1;
+  const readmeZ = topWindow === "readme" ? 2 : 1;
 
   const onReset = useCallback((d?: Difficulty) => {
     dispatch({ type: "CLEAR_MAP", payload: d });
@@ -199,7 +204,31 @@ export default function App() {
           onReady={() => setTopWindow("game")}
         />
       </XpWindow>
-      <XpTaskbar />
+      {readmeOpen && (
+        <XpWindow
+          title="README.txt - Notepad"
+          initialX={340}
+          initialY={100}
+          controls="close-only"
+          zIndex={readmeZ}
+          onFocus={() => setTopWindow("readme")}
+          onMove={measureDesktop}
+          onClose={() => setReadmeOpen(false)}
+        >
+          <ReadMe />
+        </XpWindow>
+      )}
+      <XpTaskbar
+        onReadMe={() => {
+          setReadmeOpen(true);
+          setTopWindow("readme");
+        }}
+        onLogOff={() => setShutdownKind("logoff")}
+        onTurnOff={() => setShutdownKind("shutdown")}
+      />
+      {shutdownKind && (
+        <XpShutdownScreen kind={shutdownKind} onDismiss={() => setShutdownKind(null)} />
+      )}
     </div>
   );
 }

@@ -10,6 +10,7 @@ interface Props {
   zIndex?: number;
   onFocus?: () => void;
   onMove?: () => void;
+  onClose?: () => void;
 }
 
 export default function XpWindow({
@@ -22,6 +23,7 @@ export default function XpWindow({
   zIndex,
   onFocus,
   onMove,
+  onClose,
 }: Props) {
   const [pos, setPos] = useState({ x: initialX, y: initialY });
   const offset = useRef({ ox: 0, oy: 0 });
@@ -86,6 +88,7 @@ export default function XpWindow({
             className="xp-window__btn xp-window__btn--close"
             aria-label="Close"
             onMouseDown={e => e.stopPropagation()}
+            onClick={onClose}
           >✕</button>
         </div>
       </div>

@@ -236,6 +236,310 @@ body {
   padding: 0;
 }
 
+/* ── Start button + menu ───────────────────────────────────────── */
+
+.xp-taskbar__start--active {
+  background: linear-gradient(180deg, #3da800 0%, #5fc800 40%, #3da800 100%);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+.xp-start-menu {
+  position: absolute;
+  bottom: 100%;
+  left: 2px;
+  width: 380px;
+  display: flex;
+  flex-direction: column;
+  border: 3px solid #0050c0;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  box-shadow: 2px -2px 8px rgba(0, 0, 0, 0.5);
+}
+
+.xp-start-menu__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  background: linear-gradient(
+    to right,
+    #0a246a 0%,
+    #1254b8 25%,
+    #2878e8 60%,
+    #7ab8f8 90%,
+    #a8d0ff 100%
+  );
+}
+
+.xp-start-menu__avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  background: #fff;
+  border: 2px solid #7a9ee8;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.xp-start-menu__user {
+  color: #fff;
+  font-weight: bold;
+  font-size: 15px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+.xp-start-menu__body {
+  display: flex;
+  align-items: stretch;
+}
+
+.xp-start-menu__col {
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+}
+
+.xp-start-menu__col--programs {
+  flex: 1;
+  background-color: #fff;
+}
+
+.xp-start-menu__col--places {
+  width: 150px;
+  background-color: #d3e5fa;
+  border-left: 1px solid #a8c8f0;
+  gap: 1px;
+}
+
+.xp-start-menu__item,
+.xp-start-menu__all-programs,
+.xp-start-menu__place {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 5px 8px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 11px;
+  text-align: left;
+  color: #1a1a1a;
+}
+
+.xp-start-menu__item {
+  cursor: pointer;
+}
+
+.xp-start-menu__all-programs,
+.xp-start-menu__place {
+  cursor: default;
+}
+
+.xp-start-menu__place {
+  color: #1a3a70;
+}
+
+.xp-start-menu__item:hover,
+.xp-start-menu__all-programs:hover,
+.xp-start-menu__place:hover {
+  background: #316ac5;
+  border-color: #143d8f;
+  color: #fff;
+}
+
+.xp-start-menu__item-icon {
+  font-size: 15px;
+}
+
+.xp-start-menu__all-programs {
+  margin-top: auto;
+  border-top: 1px solid #d8d8d8;
+  padding-top: 6px;
+  font-weight: bold;
+}
+
+.xp-start-menu__all-programs-arrow {
+  margin-left: auto;
+  color: #3da800;
+  font-size: 9px;
+}
+
+.xp-start-menu__divider {
+  height: 1px;
+  background: #a8c8f0;
+  margin: 4px 2px;
+}
+
+.xp-start-menu__footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 14px;
+  padding: 6px 10px;
+  background: linear-gradient(180deg, #245edb 0%, #3888e8 45%, #1a4fbc 100%);
+  border-top: 1px solid #143d8f;
+}
+
+.xp-start-menu__power-btn {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  color: #fff;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 11px;
+  font-weight: bold;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+  text-align: left;
+  cursor: pointer;
+}
+
+.xp-start-menu__power-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.xp-start-menu__power-icon {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.85),
+    0 0 0 2px rgba(0, 0, 0, 0.2),
+    inset 0 1px 1px rgba(255, 255, 255, 0.5);
+}
+
+.xp-start-menu__power-icon--logoff {
+  background: linear-gradient(135deg, #ffd479 0%, #f0a830 55%, #c87c10 100%);
+}
+
+.xp-start-menu__power-icon--logoff::before {
+  /* key bow */
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 6px;
+  height: 6px;
+  border: 1.4px solid #fff;
+  border-radius: 50%;
+}
+
+.xp-start-menu__power-icon--logoff::after {
+  /* key shaft */
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  width: 9px;
+  height: 2px;
+  background: #fff;
+  border-radius: 1px;
+  transform: rotate(45deg);
+  transform-origin: left center;
+}
+
+.xp-start-menu__power-icon--shutdown {
+  background: linear-gradient(135deg, #ff8a75 0%, #e8382a 50%, #a01008 100%);
+}
+
+.xp-start-menu__power-icon--shutdown::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 3px;
+  width: 2px;
+  height: 6px;
+  background: #fff;
+  border-radius: 1px;
+}
+
+.xp-start-menu__power-icon--shutdown::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  width: 8px;
+  height: 8px;
+  border: 1.6px solid #fff;
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+
+/* ── Read Me notepad ──────────────────────────────────────────── */
+
+.xp-notepad {
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  height: 320px;
+}
+
+.xp-notepad__menubar {
+  display: flex;
+  gap: 14px;
+  padding: 3px 6px;
+  background-color: rgb(236, 233, 216);
+  border-bottom: 1px solid rgb(180, 180, 180);
+  font-size: 11px;
+}
+
+.xp-notepad__body {
+  flex: 1;
+  margin: 0;
+  padding: 6px 8px;
+  background-color: #fff;
+  border: 1px solid rgb(128, 128, 128);
+  font-family: "Lucida Console", "Consolas", monospace;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  overflow-y: auto;
+}
+
+/* ── Log off / shutdown screen ────────────────────────────────── */
+
+.xp-shutdown {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #1941a5;
+  transition: background-color 1s ease;
+  cursor: pointer;
+}
+
+.xp-shutdown--black {
+  background-color: #000;
+}
+
+.xp-shutdown__message {
+  color: #fff;
+  font-family: "Tahoma", Arial, sans-serif;
+  font-size: 20px;
+  letter-spacing: 0.5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+  transition: opacity 0.8s ease;
+}
+
+.xp-shutdown--black .xp-shutdown__message {
+  opacity: 0;
+}
+
 /* ── Robot panel internals ────────────────────────────────────── */
 
 .robot-panel {

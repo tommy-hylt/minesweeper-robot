@@ -1,73 +1,34 @@
-# React + TypeScript + Vite
+# Minesweeper Robot — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+You're looking at it: a Windows XP desktop that never existed, running a Minesweeper robot that watches the board and plays it for you.
 
-Currently, two official plugins are available:
+This is a tribute to https://github.com/tommyinb/MinesweeperRobot, the original C# tool that automated real Minesweeper by scanning screen pixels and driving the mouse. This version skips the pixel-scanning entirely — it just reads game state directly and clicks through React props — but keeps the spirit intact, right down to the fake Start menu, taskbar, and clock.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## What you're looking at
 
-## React Compiler
+- **Minesweeper** window — ShizukuIchi's React Minesweeper (`../minesweeper`), unmodified logic
+- **Robot Console** window — a live log of every move the robot makes, and why
+- The **taskbar** at the bottom — Start menu (with this very file under Read Me), open windows, a clock
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## How it's wired
 
-## Expanding the ESLint configuration
+`App.tsx` owns the actual game state: it lifts the `reducer` and `getInitState` straight out of the vendored Minesweeper package and drives it with `useReducer`, the same way the original game does internally. That state is handed to two independent consumers:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- `<MinesweeperView>` — renders the board
+- `<ConsolePanel>` (via `useRobot` from `../robot`) — runs the solver on a timer and dispatches moves through the same `openCeil` / `changeCeilState` callbacks a human player would use
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+Neither consumer knows about the other. The board has no idea it's being played by a robot.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## The Windows XP chrome
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- `XpWindow` — the draggable, focusable frame around each panel (titlebar, close button, z-index on focus)
+- `XpTaskbar` / `XpStartMenu` — the taskbar and its Start menu popup
+- `.desktop` sizes itself to whatever the windows actually occupy (see `measureDesktop` in `App.tsx`), so the taskbar always spans the true content width — even on a phone screen where a window has been dragged past the visible edge
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Running it
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # → dist/, base path is relative for reverse-proxy hosting
 ```
