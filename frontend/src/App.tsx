@@ -4,6 +4,8 @@ import type { Difficulty, MinesweeperState } from "@minesweeper/Minesweeper/inde
 import MinesweeperView from "@minesweeper/Minesweeper/MinesweeperView";
 import ConsolePanel from "./ConsolePanel";
 import ReadMe from "./ReadMe";
+import MyDocumentsWindow from "./MyDocumentsWindow";
+import MyComputerWindow from "./MyComputerWindow";
 import XpWindow from "./XpWindow";
 import XpTaskbar from "./XpTaskbar";
 import XpShutdownScreen from "./XpShutdownScreen";
@@ -116,12 +118,36 @@ export default function App() {
     [status]
   );
 
-  const [topWindow, setTopWindow] = useState<"game" | "console" | "readme">("console");
+  const [topWindow, setTopWindow] = useState<
+    "game" | "console" | "readme" | "mydocs" | "mycomputer"
+  >("console");
   const [readmeOpen, setReadmeOpen] = useState(false);
+  const [myDocumentsOpen, setMyDocumentsOpen] = useState(false);
+  const [myComputerOpen, setMyComputerOpen] = useState(false);
   const [shutdownKind, setShutdownKind] = useState<"logoff" | "shutdown" | null>(null);
   const gameZ = topWindow === "game" ? 2 : 1;
   const consoleZ = topWindow === "console" ? 2 : 1;
   const readmeZ = topWindow === "readme" ? 2 : 1;
+  const myDocumentsZ = topWindow === "mydocs" ? 2 : 1;
+  const myComputerZ = topWindow === "mycomputer" ? 2 : 1;
+
+  const openWindows = [
+    { id: "game", title: "Minesweeper", icon: "💣" },
+    { id: "console", title: "Robot Console", icon: "🤖" },
+    ...(readmeOpen ? [{ id: "readme", title: "Read Me", icon: "📄" }] : []),
+    ...(myDocumentsOpen ? [{ id: "mydocs", title: "My Documents", icon: "🗂️" }] : []),
+    ...(myComputerOpen ? [{ id: "mycomputer", title: "My Computer", icon: "🖥️" }] : []),
+  ];
+
+  const openMyDocuments = useCallback(() => {
+    setMyDocumentsOpen(true);
+    setTopWindow("mydocs");
+  }, []);
+
+  const openMyComputer = useCallback(() => {
+    setMyComputerOpen(true);
+    setTopWindow("mycomputer");
+  }, []);
 
   const onReset = useCallback((d?: Difficulty) => {
     dispatch({ type: "CLEAR_MAP", payload: d });
@@ -209,7 +235,7 @@ export default function App() {
           title="README.txt - Notepad"
           initialX={340}
           initialY={100}
-          controls="close-only"
+          controls="all"
           zIndex={readmeZ}
           onFocus={() => setTopWindow("readme")}
           onMove={measureDesktop}
@@ -218,11 +244,44 @@ export default function App() {
           <ReadMe />
         </XpWindow>
       )}
+      {myDocumentsOpen && (
+        <XpWindow
+          title="My Documents"
+          initialX={260}
+          initialY={180}
+          controls="all"
+          zIndex={myDocumentsZ}
+          onFocus={() => setTopWindow("mydocs")}
+          onMove={measureDesktop}
+          onClose={() => setMyDocumentsOpen(false)}
+        >
+          <MyDocumentsWindow onOpenMyComputer={openMyComputer} />
+        </XpWindow>
+      )}
+      {myComputerOpen && (
+        <XpWindow
+          title="My Computer"
+          initialX={420}
+          initialY={220}
+          controls="all"
+          zIndex={myComputerZ}
+          onFocus={() => setTopWindow("mycomputer")}
+          onMove={measureDesktop}
+          onClose={() => setMyComputerOpen(false)}
+        >
+          <MyComputerWindow onOpenMyDocuments={openMyDocuments} />
+        </XpWindow>
+      )}
       <XpTaskbar
+        openWindows={openWindows}
+        activeWindow={topWindow}
+        onSelectWindow={(id) => setTopWindow(id as typeof topWindow)}
         onReadMe={() => {
           setReadmeOpen(true);
           setTopWindow("readme");
         }}
+        onOpenMyDocuments={openMyDocuments}
+        onOpenMyComputer={openMyComputer}
         onLogOff={() => setShutdownKind("logoff")}
         onTurnOff={() => setShutdownKind("shutdown")}
       />

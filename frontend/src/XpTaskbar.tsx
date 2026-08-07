@@ -1,13 +1,33 @@
 import { useEffect, useRef, useState } from "react";
 import XpStartMenu from "./XpStartMenu";
 
+export interface TaskbarWindow {
+  id: string;
+  title: string;
+  icon: string;
+}
+
 interface Props {
+  openWindows: TaskbarWindow[];
+  activeWindow: string;
+  onSelectWindow: (id: string) => void;
   onReadMe: () => void;
+  onOpenMyDocuments: () => void;
+  onOpenMyComputer: () => void;
   onLogOff: () => void;
   onTurnOff: () => void;
 }
 
-export default function XpTaskbar({ onReadMe, onLogOff, onTurnOff }: Props) {
+export default function XpTaskbar({
+  openWindows,
+  activeWindow,
+  onSelectWindow,
+  onReadMe,
+  onOpenMyDocuments,
+  onOpenMyComputer,
+  onLogOff,
+  onTurnOff,
+}: Props) {
   const [time, setTime] = useState(() => new Date());
   const [menuOpen, setMenuOpen] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
@@ -37,6 +57,14 @@ export default function XpTaskbar({ onReadMe, onLogOff, onTurnOff }: Props) {
             setMenuOpen(false);
             onReadMe();
           }}
+          onOpenMyDocuments={() => {
+            setMenuOpen(false);
+            onOpenMyDocuments();
+          }}
+          onOpenMyComputer={() => {
+            setMenuOpen(false);
+            onOpenMyComputer();
+          }}
           onLogOff={() => {
             setMenuOpen(false);
             onLogOff();
@@ -64,14 +92,16 @@ export default function XpTaskbar({ onReadMe, onLogOff, onTurnOff }: Props) {
       <div className="xp-taskbar__divider" />
 
       <div className="xp-taskbar__windows">
-        <button className="xp-taskbar__win-btn">
-          <span className="xp-taskbar__win-icon">💣</span>
-          Minesweeper
-        </button>
-        <button className="xp-taskbar__win-btn">
-          <span className="xp-taskbar__win-icon">🤖</span>
-          Robot Console
-        </button>
+        {openWindows.map((w) => (
+          <button
+            key={w.id}
+            className={`xp-taskbar__win-btn${activeWindow === w.id ? " xp-taskbar__win-btn--active" : ""}`}
+            onClick={() => onSelectWindow(w.id)}
+          >
+            <span className="xp-taskbar__win-icon">{w.icon}</span>
+            {w.title}
+          </button>
+        ))}
       </div>
 
       <div className="xp-taskbar__tray">

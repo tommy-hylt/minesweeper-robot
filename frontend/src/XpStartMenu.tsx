@@ -1,10 +1,20 @@
+import { folderIcon, computerIcon, helpIcon } from "./assets/icons/xp";
+
 interface Props {
   onReadMe: () => void;
+  onOpenMyDocuments: () => void;
+  onOpenMyComputer: () => void;
   onLogOff: () => void;
   onTurnOff: () => void;
 }
 
-export default function XpStartMenu({ onReadMe, onLogOff, onTurnOff }: Props) {
+export default function XpStartMenu({
+  onReadMe,
+  onOpenMyDocuments,
+  onOpenMyComputer,
+  onLogOff,
+  onTurnOff,
+}: Props) {
   return (
     <div className="xp-start-menu">
       <div className="xp-start-menu__header">
@@ -14,35 +24,27 @@ export default function XpStartMenu({ onReadMe, onLogOff, onTurnOff }: Props) {
 
       <div className="xp-start-menu__body">
         <div className="xp-start-menu__col xp-start-menu__col--programs">
-          <button className="xp-start-menu__item" onClick={onReadMe}>
-            <span className="xp-start-menu__item-icon">📄</span>
-            Read Me
-          </button>
           <div className="xp-start-menu__all-programs">
-            <span className="xp-start-menu__item-icon">📁</span>
+            <img src={folderIcon} className="xp-silk-icon" alt="" />
             All Programs
             <span className="xp-start-menu__all-programs-arrow">▶</span>
           </div>
         </div>
 
         <div className="xp-start-menu__col xp-start-menu__col--places">
-          <div className="xp-start-menu__place">
-            <span className="xp-start-menu__item-icon">🗂️</span>
+          <button className="xp-start-menu__item xp-start-menu__place" onClick={onOpenMyDocuments}>
+            <img src={folderIcon} className="xp-silk-icon" alt="" />
             My Documents
-          </div>
-          <div className="xp-start-menu__place">
-            <span className="xp-start-menu__item-icon">🖥️</span>
+          </button>
+          <button className="xp-start-menu__item xp-start-menu__place" onClick={onOpenMyComputer}>
+            <img src={computerIcon} className="xp-silk-icon" alt="" />
             My Computer
-          </div>
+          </button>
           <div className="xp-start-menu__divider" />
-          <div className="xp-start-menu__place">
-            <span className="xp-start-menu__item-icon">⚙️</span>
-            Control Panel
-          </div>
-          <div className="xp-start-menu__place">
-            <span className="xp-start-menu__item-icon">❓</span>
+          <button className="xp-start-menu__item xp-start-menu__place" onClick={onReadMe}>
+            <img src={helpIcon} className="xp-silk-icon" alt="" />
             Help and Support
-          </div>
+          </button>
         </div>
       </div>
 

@@ -1,0 +1,10 @@
+export { default as folderIcon } from "./folder.png";
+export { default as driveIcon } from "./drive.png";
+export { default as computerIcon } from "./computer.png";
+export { default as helpIcon } from "./help.png";
+export { default as navBackIcon } from "./nav-back.png";
+export { default as navForwardIcon } from "./nav-forward.png";
+export { default as navUpIcon } from "./nav-up.png";
+export { default as toolbarSearchIcon } from "./toolbar-search.png";
+export { default as toolbarFoldersIcon } from "./toolbar-folders.png";
+export { default as shortcutIcon } from "./shortcut.png";

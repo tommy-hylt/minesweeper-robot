@@ -6,11 +6,15 @@ interface Props {
 }
 
 export default function XpShutdownScreen({ kind, onDismiss }: Props) {
-  const [black, setBlack] = useState(false);
+  const [phase, setPhase] = useState<"in" | "hold" | "black">("in");
 
   useEffect(() => {
-    const t = setTimeout(() => setBlack(true), 1600);
-    return () => clearTimeout(t);
+    const toHold = setTimeout(() => setPhase("hold"), 50);
+    const toBlack = setTimeout(() => setPhase("black"), 2200);
+    return () => {
+      clearTimeout(toHold);
+      clearTimeout(toBlack);
+    };
   }, []);
 
   useEffect(() => {
@@ -22,10 +26,7 @@ export default function XpShutdownScreen({ kind, onDismiss }: Props) {
   const message = kind === "logoff" ? "Logging off..." : "Windows is shutting down...";
 
   return (
-    <div
-      className={`xp-shutdown${black ? " xp-shutdown--black" : ""}`}
-      onClick={onDismiss}
-    >
+    <div className={`xp-shutdown xp-shutdown--${phase}`} onClick={onDismiss}>
       <span className="xp-shutdown__message">{message}</span>
     </div>
   );

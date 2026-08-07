@@ -32,3 +32,7 @@ npm install
 npm run dev      # http://localhost:5173
 npm run build    # → dist/, base path is relative for reverse-proxy hosting
 ```
+
+## Credits
+
+Folder, drive, computer, help, and shortcut icons are the genuine Windows XP originals, extracted from `shell32.dll` and archived at [archive.org/details/win-xp-icons](https://archive.org/details/win-xp-icons) and [archive.org/details/WindowsXPExtractedIcons](https://archive.org/details/WindowsXPExtractedIcons). The toolbar Back/Forward/Up/Search/Folders icons are from the "Windows XP Explorer Toolbar Icons" pack shared on the [Classic Shell forum](https://www.classicshell.net/forum/viewtopic.php?f=8&t=5070).

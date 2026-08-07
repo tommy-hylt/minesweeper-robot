@@ -77,12 +77,12 @@ export default function XpWindow({
               className="xp-window__btn xp-window__btn--min"
               aria-label="Minimize"
               onMouseDown={e => e.stopPropagation()}
-            >_</button>
+            />
             <button
               className="xp-window__btn xp-window__btn--max"
               aria-label="Maximize"
               onMouseDown={e => e.stopPropagation()}
-            >□</button>
+            />
           </>}
           <button
             className="xp-window__btn xp-window__btn--close"
